@@ -38,7 +38,7 @@ Clone simulator in catkin_ws
 
 ```
 roscd; cd ../src
-git clone https://gitlab.iri.upc.edu/seat_adc/seat_car_simulator.git
+git clone https://github.com/AutoModelCar/seat_car_simulator.git
 rosdep install -i --from-paths seat_car_simulator
 roscd; cd ..
 catkin_make
@@ -55,6 +55,6 @@ roslaunch seat_car_gazebo sim.launch
 rosservice call /semaphore_start1_color_plugin/trigger
 
 # Test car movement
-rostopic pub /manual_control/steering std_msgs/Int16 "data: 75"
+rostopic pub /steering std_msgs/Int16 "data: 75"
 rostopic pub /manual_control/speed    std_msgs/Int16 "data: -750"
 ```
