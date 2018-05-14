@@ -1,0 +1,12 @@
+<library path="lib/libseat_car_controller">
+
+  <class name="effort_controllers/SeatCarController"
+         type="effort_controllers::SeatCarController"
+         base_class_type="controller_interface::ControllerBase">
+    <description>
+      this is a description
+    </description>
+  </class>
+
+</library>
+

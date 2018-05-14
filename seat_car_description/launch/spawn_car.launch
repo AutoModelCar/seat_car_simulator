@@ -1,0 +1,118 @@
+<!-- -->
+<launch>
+
+  <arg name="name"  default="seat_car"/>
+  <arg name="model" default="car"/>
+  <arg name="x"     default="0.0"/>
+  <arg name="y"     default="0.0"/>
+  <arg name="yaw"   default="0.0"/>
+
+  <arg name="world_frame" default="world"/>
+  <arg name="map_frame"   default="map"/>
+  <arg name="odom_frame"  default="odom"/>
+  
+  <arg name="fake_localization" default="true"/>
+
+  <include file="$(find seat_car_description)/launch/description.launch">
+    <arg name="name"  value="$(arg name)"/>
+    <arg name="model" value="$(arg model)"/>
+  </include>
+
+  <node name="spawn_urdf_$(arg name)"
+        pkg ="gazebo_ros"
+        type="spawn_model" 
+        args="-param robot_description
+              -urdf -model $(arg name)
+              -x $(arg x) -y $(arg y) -z 0.104 -R 0 -P 0 -Y $(arg yaw) "/>
+
+  <include file="$(find seat_car_control)/launch/control.launch">
+    <arg name="name" value="$(arg name)"/>
+  </include>
+  
+  <!-- odometry pkg from https://github.com/AutoModelCar/model_car/tree/version-3 -->
+  <node pkg ="odometry" 
+        type="odometry_publisher" 
+        name="odometry_publisher"
+        output="screen">
+    <param name="file_name" value="/opt/ros/modelcar/catkin_ws/install/share/odometry/cfg/SteerAngleActuator.xml"/>
+    <param name="initial_x" value="$(arg x)"/>
+    <param name="initial_y" value="$(arg y)"/>
+    <param name="initial_yaw" value="$(arg yaw)"/>
+    <remap from="/manual_control/steering"
+             to="/steering_angle"/>
+    <remap from="/model_car/twist"
+             to="/twist"/>
+    <remap from="/model_car/yaw"
+             to="/yaw"/>
+    <remap from="~odom"
+             to="/odom"/>
+  </node>
+  
+  <arg name="break_distance" default="0.5"/>
+  <arg name="angle"          default="40"/>
+  <node pkg="auto_stop"
+        type="auto_stop_node"
+        name="auto_stop"
+        output="screen">
+    <param name="angle_front"    type="int"     value="$(arg angle)" />
+    <param name="angle_back"     type="int"     value="$(arg angle)"/>
+    <param name="break_distance" type="double"  value="$(arg break_distance)"/>
+    <param name="break_distance_based_on_speed" type="bool"  value="false"/>
+  </node>
+  
+  <node name="imu_filter"
+        pkg ="imu_filter_madgwick"
+        type="imu_filter_node"
+        output="screen">
+    <remap from="/imu/data_raw"
+             to="/imu"/>
+    <param name="use_mag" value="false"/>
+    <param name="gain" value="0.1"/>
+    <param name="zeta" value="0.0"/>
+    <param name="mag_bias_x" value="0.0"/>
+    <param name="mag_bias_y" value="0.0"/>
+    <param name="mag_bias_z" value="0.0"/>
+    <param name="orientation_stddev" value="0.0"/>
+    <param name="world_frame" value="nwu"/>
+    <param name="use_magnetic_field_msg" value="false"/>
+    <param name="fixed_frame" value="/$(arg name)/imu"/>
+    <param name="publish_tf" value="false"/>
+    <param name="reverse_tf" value="false"/>
+    <param name="constant_dt" value="0.0"/>
+    <param name="publish_debug_topics" value="false"/>
+    <param name="stateless" value="false"/>
+  </node>
+
+  <node name="$(arg name)_static_tf_world_map" pkg="tf" type="static_transform_publisher"
+        args="0 0 0 0 0 0 $(arg world_frame) $(arg map_frame) 100"/>
+
+  <group if="$(arg fake_localization)">  
+    <node name="$(arg name)_fake_localization"
+          pkg ="fake_localization"
+          type="fake_localization">
+      <param name="odom_frame_id"   value="$(arg odom_frame)" />
+      <param name="global_frame_id" value="$(arg map_frame)" />
+      <param name="base_frame_id"   value="base_link" />
+      <param name="delta_x"   value="$(arg x)+0.0" />
+      <param name="delta_y"   value="$(arg y)+0.0" />
+      <param name="delta_yaw" value="$(arg yaw)+0.0" />
+      <remap from="base_pose_ground_truth" 
+              to="odom_ground_truth"/> <!-- odom_ground_truth, odom -->
+      <remap from="initialpose" 
+              to="/$(arg name)/initialpose"/>
+      <remap from="amcl_pose" 
+              to="/$(arg name)/amcl_pose"/>
+    </node>
+  </group>
+  
+  <group unless="$(arg fake_localization)">
+
+
+    <node name="$(arg name)_static_tf_map_odom" pkg="tf" type="static_transform_publisher"
+          args="0 0 0.04 0 0 0 $(arg map_frame) $(arg odom_frame) 100">
+    </node>
+    
+
+  </group>
+
+</launch>

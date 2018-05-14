@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+<root xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find road_description)/urdf/materials.xacro" />
+  <xacro:property name="default_radius" value="0.5" />
+
+  <xacro:macro name="ball" 
+               params="parent:=ceiling_base_link 
+                       name:=ball 
+                       *origin 
+                       gazebo_material:=Gazebo/Red
+                       urdf_color:=red
+                       radius:=${default_radius}">
+
+    <joint name="joint_${parent}_to_${name}" type="fixed">
+      <xacro:insert_block name="origin" /> 
+      <parent link="${parent}"/>
+      <child link="${name}"/>
+    </joint>
+
+
+    <link name="${name}">
+      <inertial>
+        <mass value="0.001"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+        <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="${radius}"/>
+        </geometry>
+        <material name="${urdf_color}"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="${radius}"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <gazebo>
+      <static>1</static>
+    </gazebo>
+
+    <gazebo reference="${name}">
+      <material>${gazebo_material}</material>
+    </gazebo>
+
+  </xacro:macro>
+
+</root>

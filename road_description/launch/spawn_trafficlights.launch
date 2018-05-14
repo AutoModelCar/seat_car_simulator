@@ -1,0 +1,35 @@
+<!-- -->
+<launch>
+  <arg name="circuit"  default="final"/>
+  <arg name="name"  default="trafficlights"/>
+  <arg name="x"     default="0.0"/>
+  <arg name="y"     default="0.0"/>
+  <arg name="yaw"   default="0.0"/>
+  <arg name="model" default="$(arg name)"/>
+  <arg name="model_path" default="$(find road_description)/urdf/circuits/$(arg circuit)/$(arg model).xacro"/>
+  <arg name="parent" default="$(arg name)_base_link"/>
+
+  <param name="$(arg name)_description" 
+         command="$(find xacro)/xacro --inorder '$(arg model_path)'
+                  name:=$(arg name)
+                  parent:=$(arg parent)"
+  />
+
+  <node name="$(arg name)_state_publisher"
+        pkg ="robot_state_publisher"
+        type="robot_state_publisher">
+    <!--<param name="tf_prefix" value="/$(arg name)" type="str" />-->
+    <remap from="robot_description" to="$(arg name)_description" />
+    <remap from="/joint_states" to="/$(arg name)/joint_states" />
+  </node>
+  
+  <node name="spawn_urdf_$(arg name)"
+        pkg ="gazebo_ros" 
+        type="spawn_model"
+        args="-param /$(arg name)_description -urdf -model $(arg name) -x $(arg x) -y $(arg y) -z 0 -Y $(arg yaw)">
+  </node>
+
+  <node name="$(arg name)_static_tf" pkg="tf" type="static_transform_publisher"
+        args="$(arg x) $(arg y) 0 $(arg yaw) 0 0 world $(arg parent) 100"/>
+
+</launch>

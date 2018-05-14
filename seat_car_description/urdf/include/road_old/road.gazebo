@@ -1,0 +1,32 @@
+<?xml version="2.0"?>
+<robot>
+
+  <gazebo>
+    <static>1</static>
+  </gazebo>
+    
+  <gazebo reference="road_link">
+    <material>Gazebo/Grey</material>
+  </gazebo>
+
+  <gazebo reference="road_image">
+  </gazebo>
+
+  <gazebo reference="ceiling">
+    <material>Gazebo/Grey</material>
+  </gazebo>
+
+  <gazebo reference="lamp1">
+    <material>Gazebo/Red</material>
+  </gazebo>
+
+  <gazebo reference="lamp2">
+    <material>Gazebo/Green</material>
+  </gazebo>
+
+  <gazebo reference="lamp3">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+</robot>
+

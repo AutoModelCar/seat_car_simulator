@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+
+<root xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="road" params="name size *origin">
+    <!-- obstacle -->
+    <link name="road_link">
+      <inertial>
+        <mass value="100"/>
+        <origin xyz="0 0 0.01" rpy="0 0 0"/>
+        <inertia ixx="21.33933333" ixy="0.0" ixz="0.0" iyy="13.73933333" iyz="0.0" izz="35.07266667" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="10 10 0.02"/>
+        </geometry>
+        <material name="green"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="10 10 0.02"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="road_link_road_image" type="fixed">
+      <origin xyz="0 0 0.011" rpy="1.5707 0 0" />
+      <parent link="road_link"/>
+      <child link="road_image" />
+    </joint>
+
+    <link name="road_image">
+      <inertial>
+        <mass value="0.001"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+        <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://seat_car_description/urdf/include/road/road.dae" scale="${size*8.63} ${size*8.63} ${size*8.63}"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://seat_car_description/urdf/include/road/road.dae" scale="${size*8.63} ${size*8.63} ${size*8.63}"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="road_link_ceiling" type="fixed">
+      <origin xyz="0 0 2.0" rpy="0 0 0" />
+      <parent link="road_link"/>
+      <child link="ceiling" />
+    </joint>
+
+    <link name="ceiling">
+    </link>
+
+    <joint name="ceiling_lamp1" type="fixed">
+      <origin xyz="10 10 -0.02" rpy="0 0 0" />
+      <parent link="ceiling"/>
+      <child link="lamp1" />
+    </joint>
+
+    <link name="lamp1">
+      <inertial>
+        <mass value="0.001"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+        <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="2 2 0.02"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="2 2 0.02"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="ceiling_lamp2" type="fixed">
+      <origin xyz="10 -10 -0.02" rpy="0 0 0" />
+      <parent link="ceiling"/>
+      <child link="lamp2" />
+    </joint>
+
+    <link name="lamp2">
+      <inertial>
+        <mass value="0.001"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+        <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="2 2 0.02"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="2 2 0.02"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="ceiling_lamp3" type="fixed">
+      <origin xyz="-10 10 -0.02" rpy="0 0 0" />
+      <parent link="ceiling"/>
+      <child link="lamp3" />
+    </joint>
+
+    <link name="lamp3">
+      <inertial>
+        <mass value="0.001"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+        <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="2 2 0.02"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="2 2 0.02"/>
+        </geometry>
+      </collision>
+    </link>
+  </xacro:macro>
+
+</root>
+

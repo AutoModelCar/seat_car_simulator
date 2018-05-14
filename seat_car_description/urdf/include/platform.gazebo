@@ -1,0 +1,66 @@
+<?xml version="2.0"?>
+<robot>
+  <gazebo>
+    <static>0</static>
+  </gazebo>
+
+  <gazebo reference="base_link">
+    <material>Gazebo/Grey</material>
+  </gazebo>
+
+  <gazebo reference="front_left_wheel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo reference="front_right_wheel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo reference="rear_left_wheel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo reference="rear_right_wheel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo reference="front_left_axel_front_left_wheel_joint">
+    <implicitSpringDamper>true</implicitSpringDamper>
+  </gazebo>
+
+  <gazebo reference="front_right_axel_front_right_wheel_joint">
+    <implicitSpringDamper>true</implicitSpringDamper>
+  </gazebo>
+
+  <gazebo reference="base_link_rear_left_wheel_joint">
+    <implicitSpringDamper>true</implicitSpringDamper>
+  </gazebo>
+
+  <gazebo reference="base_link_rear_right_wheel_joint">
+    <implicitSpringDamper>true</implicitSpringDamper>
+  </gazebo>
+
+  <gazebo reference="base_link_front_left_axel_joint">
+    <implicitSpringDamper>true</implicitSpringDamper>
+  </gazebo>
+
+  <gazebo reference="base_link_front_right_axel_joint">
+    <implicitSpringDamper>true</implicitSpringDamper>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>seat_car</robotNamespace>
+    </plugin>
+  </gazebo>
+  
+  <gazebo>
+    <plugin name="seat_car_ground_truth" filename="libgazebo_ros_p3d.so">
+      <frameName>map</frameName>
+      <bodyName>base_link</bodyName>
+      <topicName>odom_ground_truth</topicName>
+      <updateRate>30.0</updateRate>
+    </plugin>
+  </gazebo>
+
+</robot>

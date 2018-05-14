@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<robot name="ceiling" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="PI" value="3.1415926535897931" />
+  <xacro:property name="pan" value="0" />
+  <xacro:property name="tilt" value="0" />
+  
+  <xacro:include filename="$(find road_description)/urdf/ceiling/panel_macro.xacro" />  
+
+  <link name="$(arg parent)"/>
+  
+  <xacro:panel name="panel_red" 
+               parent="$(arg parent)"
+               gazebo_material="Gazebo/Red"
+               urdf_color="red">
+    <origin xyz="2.5 -5.0 $(arg height)" rpy="${-tilt} 0 ${-pan}"/>
+  </xacro:panel>
+  
+  <xacro:panel name="panel_green" 
+               parent="$(arg parent)"
+               gazebo_material="Gazebo/Green"
+               urdf_color="green">
+    <origin xyz="0.0 -2.5 $(arg height)" rpy="${tilt} 0 ${pan}"/>
+  </xacro:panel>
+  
+  <xacro:panel name="panel_blue" 
+               parent="$(arg parent)"
+               gazebo_material="Gazebo/Blue"
+               urdf_color="blue">
+    <origin xyz="0.0 -7.5 $(arg height)" rpy="${-tilt} 0 ${pan}"/>
+  </xacro:panel>
+  
+  <xacro:panel name="panel_yellow" 
+               parent="$(arg parent)"
+               gazebo_material="Gazebo/Yellow"
+               urdf_color="yellow">
+    <origin xyz="-2.5 -5.0 $(arg height)" rpy="${tilt} 0 ${-pan}"/>
+  </xacro:panel>
+
+</robot>

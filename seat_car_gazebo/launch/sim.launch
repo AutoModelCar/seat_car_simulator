@@ -1,0 +1,41 @@
+<!-- -->
+<launch>
+
+  <arg name="circuit"  default="full"/>
+  <arg name="spawn_circuit" default="true"/>
+  <arg name="name"  default="seat_car"/>
+  <arg name="model" default="car"/>
+  <arg name="world" default="empty"/> <!-- empty, building -->
+  <arg name="gazebo_gui" default="False"/>
+  <arg name="car_x"    default="0.0"/>
+  <arg name="car_y"    default="-0.2"/> <!--CW: -0.2, CCW: 0.2 -->
+  <arg name="car_yaw"  default="0.0"/> <!--CW: 0.0, CCW: 3.1416 -->
+  <arg name="fake_localization"  default="false"/>
+  <arg name="rviz"       default="true"/>
+  <arg name="rviz_file"  default="$(arg name)"/>
+
+  <include file="$(find seat_car_gazebo)/launch/world.launch">
+    <arg name="world" value="$(arg world)"/>
+    <arg name="gui"   value="$(arg gazebo_gui)"/>
+  </include>
+  
+  <include if="$(arg spawn_circuit)" file="$(find road_description)/launch/spawn_circuit.launch">
+    <arg name="circuit" value="$(arg circuit)"/>
+  </include>
+  
+  <include file="$(find seat_car_description)/launch/spawn_car.launch">
+    <arg name="name"  value="$(arg name)"/>
+    <arg name="model" value="$(arg model)"/>
+    <arg name="x"     value="$(arg car_x)"/>
+    <arg name="y"     value="$(arg car_y)"/>
+    <arg name="yaw"   value="$(arg car_yaw)"/>
+    <arg name="fake_localization" value="$(arg fake_localization)"/>
+  </include>
+  
+  <node name="rviz"
+        pkg="rviz"
+        type="rviz"
+        if="$(arg rviz)"
+        args="-d $(find seat_car_description)/config/$(arg rviz_file).rviz" />
+
+</launch>

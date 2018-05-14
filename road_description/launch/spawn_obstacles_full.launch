@@ -1,0 +1,54 @@
+<!-- -->
+<launch>
+
+  <include file="$(find road_description)/launch/spawn_box.launch">
+    <arg name="name" value="obstacle1"/>
+    <arg name="x" value="-2.46"/>
+    <arg name="y" value="-10.39"/>
+    <arg name="yaw" value="0.0"/>
+    <arg name="length" value="0.4"/>
+    <arg name="width"  value="0.15"/>
+    <arg name="height" value="0.15"/>
+  </include>
+  
+  <include file="$(find road_description)/launch/spawn_box.launch">
+    <arg name="name" value="obstacle2"/>
+    <arg name="x" value="-5.3"/>
+    <arg name="y" value="-3.0"/>
+    <arg name="yaw" value="1.5708"/>
+    <arg name="length" value="0.15"/>
+    <arg name="width"  value="0.15"/>
+    <arg name="height" value="0.15"/>
+  </include>
+  
+  <include file="$(find road_description)/launch/spawn_box.launch">
+    <arg name="name" value="obstacle3a"/>
+    <arg name="x" value="-2.86"/>
+    <arg name="y" value="-0.71"/>
+    <arg name="yaw" value="1.5708"/>
+    <arg name="length" value="0.45"/>
+    <arg name="width"  value="0.15"/>
+    <arg name="height" value="0.15"/>
+  </include>
+  
+  <include file="$(find road_description)/launch/spawn_box.launch">
+    <arg name="name" value="obstacle3b"/>
+    <arg name="x" value="-2.295"/>
+    <arg name="y" value="-0.71"/>
+    <arg name="yaw" value="1.5708"/>
+    <arg name="length" value="0.45"/>
+    <arg name="width"  value="0.15"/>
+    <arg name="height" value="0.15"/>
+  </include>
+  
+  <include file="$(find road_description)/launch/spawn_box.launch">
+    <arg name="name" value="obstacle3c"/>
+    <arg name="x" value="3.46"/>
+    <arg name="y" value="-0.58"/>
+    <arg name="yaw" value="0"/>
+    <arg name="length" value="0.45"/>
+    <arg name="width"  value="0.15"/>
+    <arg name="height" value="0.15"/>
+  </include>
+
+</launch>  

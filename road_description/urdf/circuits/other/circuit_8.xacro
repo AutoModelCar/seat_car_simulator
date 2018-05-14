@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<robot name="road" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find road_description)/urdf/roads/road_piece.xacro" />
+  <xacro:include filename="$(find road_description)/urdf/roads/road_ground.xacro" />
+
+  <link name="$(arg parent)">
+    <inertial>
+      <mass value="100"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="21.33933333" ixy="0" ixz="0" iyy="13.73933333" iyz="0" izz="35.07266667" />
+    </inertial>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+      <material name="red"/>
+    </collision>
+  </link>
+
+  <xacro:road name="$(arg name)1" parent="$(arg parent)" dae="straight">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:road>
+
+  <xacro:road name="$(arg name)2" parent="$(arg parent)" dae="left90" size="2.0">
+    <origin xyz="1.5 0.5 0" rpy="0 0 0"/>
+  </xacro:road>
+
+  <xacro:road name="$(arg name)3" parent="$(arg parent)" dae="straight">
+    <origin xyz="2 2 0" rpy="0 0 ${PI/2}"/>
+  </xacro:road>
+
+  <xacro:road name="$(arg name)4" parent="$(arg parent)" dae="right90" size="2.0">
+    <origin xyz="2.5 3.5 0" rpy="0 0 ${PI/2}"/>
+  </xacro:road>
+
+  <xacro:road name="$(arg name)5" parent="$(arg parent)" dae="left90" size="2.0">
+    <origin xyz="4.5 4.5 0" rpy="0 0 0"/>
+  </xacro:road>
+
+  <xacro:road name="$(arg name)6" parent="$(arg parent)" dae="left90" size="2.0">
+    <origin xyz="4.5 6.5 0" rpy="0 0 ${PI/2}"/>
+  </xacro:road>
+
+  <xacro:road name="$(arg name)7" parent="$(arg parent)" dae="straight">
+    <origin xyz="3 7 0" rpy="0 0 ${PI}"/>
+  </xacro:road>
+
+  <xacro:road name="$(arg name)8" parent="$(arg parent)" dae="left90" size="2.0">
+    <origin xyz="1.5 6.5 0" rpy="0 0 ${PI}"/>
+  </xacro:road>
+
+  <xacro:road name="$(arg name)9" parent="$(arg parent)" dae="right90" size="2.0">
+    <origin xyz="0.5 4.5 0" rpy="0 0 ${3*PI/2}"/>
+  </xacro:road>
+
+  <xacro:road name="$(arg name)10" parent="$(arg parent)" dae="left90" size="2.0">
+    <origin xyz="-1.5 3.5 0" rpy="0 0 ${PI}"/>
+  </xacro:road>
+
+  <xacro:road name="$(arg name)11" parent="$(arg parent)" dae="straight">
+    <origin xyz="-2 2 0" rpy="0 0 ${3*PI/2}"/>
+  </xacro:road>
+
+  <xacro:road name="$(arg name)12" parent="$(arg parent)" dae="left90" size="2.0">
+    <origin xyz="-1.5 0.5 0" rpy="0 0 ${3*PI/2}"/>
+  </xacro:road>
+
+</robot>

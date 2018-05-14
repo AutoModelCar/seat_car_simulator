@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+
+<root xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!--<xacro:include filename="$(find road_description)/urdf/materials.xacro" />-->
+
+  <xacro:property name="PI" value="3.1415926535897931" />
+  <xacro:property name="panel_width"    value="0.07" />
+  <xacro:property name="panel_depth"    value="0.07" />
+  <xacro:property name="panel_height"   value="0.15" />
+  <xacro:property name="tag_size"       value="0.05" />
+  <xacro:property name="tag_z_offset"   value="0.065" />
+  <xacro:property name="delta"          value="0.001" />
+  <xacro:property name="light_width"    value="0.05" />
+  <xacro:property name="light_height"   value="0.025" />
+  <xacro:property name="light_z_offset" value="0.125" />
+
+  <xacro:macro name="signal" 
+               params="name:=signal                
+                       parent:=${name}_base_link 
+                       *origin
+                       tag_dae:=tag57
+                       signal_dae:=arrow_left
+                       light_color:=red
+                       light_material:=Gazebo/RedGlow
+                       light_material2:=Gazebo/GreenGlow
+                       ">
+    
+    <!-- tag_dae = tag95, tag47, tag74, tag29, tag57 -->
+    <!-- signal_dae = arrow_left, arrow_right -->
+    <!-- light_color    = red,            green,            blue,           black -->
+    <!-- light_material = Gazebo/RedGlow, Gazebo/GreenGlow, Gazebo/BlueSky, Gazebo/Black -->
+
+    <!-- PANEL -->
+    <joint name="joint_${parent}_to_${name}" type="fixed">
+      <xacro:insert_block name="origin" /> 
+      <parent link="${parent}"/>
+      <child link="${name}_link"/>
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.001"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+        <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 ${panel_height/2.0}" rpy="0 0 0"/>
+        <geometry>
+          <box size="${panel_depth} ${panel_width} ${panel_height}"/>
+        </geometry>
+        <material name="white"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 ${panel_height/2.0}" rpy="0 0 0"/>
+        <geometry>
+          <box size="${panel_depth} ${panel_width} ${panel_height}"/>
+        </geometry>
+      </collision>
+    </link>
+    
+    <gazebo>
+      <static>1</static>
+    </gazebo>
+
+    <gazebo reference="${name}_link">
+      <material>Gazebo/White</material>
+    </gazebo>
+    <!-- PANEL -->
+
+    <!-- TAG -->
+    <joint name="joint_${name}_link_to_${name}_tag_link" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="${name}_link"/>
+      <child link="${name}_tag_link"/>
+    </joint>
+
+    <link name="${name}_tag_link">
+    </link>
+
+    <joint name="joint_${name}_tag_link_to_${name}_tag_image" type="fixed">
+      <origin xyz="${panel_depth/2.0+delta} 0 ${tag_size/2.0+tag_z_offset}" rpy="0 ${PI} -${PI/2}" />
+      <parent link="${name}_tag_link"/>
+      <child link="${name}_tag_image" />
+    </joint>
+
+    <link name="${name}_tag_image">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://road_description/urdf/trafficlight/dae/${tag_dae}.dae" scale="${tag_size} 1.0 ${tag_size}"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <gazebo>
+      <static>1</static>
+    </gazebo>
+
+    <gazebo reference="${name}_tag_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+
+    <gazebo reference="${name}_tag_image">
+    </gazebo>
+    <!-- TAG -->
+    
+    <!-- LIGHT -->
+    <joint name="joint_${name}_link_to_${name}_light_link" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="${name}_link"/>
+      <child link="${name}_light_link"/>
+    </joint>
+
+    <link name="${name}_light_link">
+    </link>
+
+    <joint name="joint_${name}_light_link_to_${name}_light_image" type="fixed">
+      <origin xyz="${panel_depth/2.0+delta} 0 ${light_height/2.0+light_z_offset}" rpy="0 ${PI} -${PI/2}" />
+      <parent link="${name}_light_link"/>
+      <child link="${name}_light_image" />
+    </joint>
+
+    <link name="${name}_light_image">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://road_description/urdf/trafficlight/dae/${signal_dae}.dae" scale="${light_width} 1.0 ${light_height}"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <gazebo>
+      <static>1</static>
+    </gazebo>
+
+    <gazebo reference="${name}_light_link">
+    </gazebo>
+
+    <gazebo reference="${name}_light_image">
+      <!--<material>${light_material}</material>-->
+    </gazebo>
+    <!-- LIGHT -->
+
+  </xacro:macro>
+
+</root>

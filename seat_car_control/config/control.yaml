@@ -1,0 +1,58 @@
+#seat_car:
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50  
+
+  car_cont:
+    type: effort_controllers/SeatCarController
+    steer_left_joint: base_link_front_left_axel_joint
+    steer_right_joint: base_link_front_right_axel_joint
+    drive_rear_left_joint: base_link_rear_left_wheel_joint
+    drive_rear_right_joint: base_link_rear_right_wheel_joint
+    drive_front_left_joint: front_left_axel_front_left_wheel_joint
+    drive_front_right_joint: front_right_axel_front_right_wheel_joint
+    axel_distance: 0.26
+    wheel_distance: 0.165
+    wheel_diameter: 0.063
+    steering_topic: /steering
+    steering_fb_topic: /steering_angle
+    speed_topic: /speed
+    yaw_topic: /yaw    
+    twist_topic: /twist    
+    zero_steer_angle: 0.0
+    steer_coeff_a: 0.1343
+    steer_coeff_b: -0.9429
+    steer_coeff_c: 1.058
+    
+    gains:
+      base_link_front_left_axel_joint:
+        p: 1.0
+        d: 0.0
+        i: 0.1
+        i_clamp: 1
+      base_link_front_right_axel_joint:
+        p: 1.0
+        d: 0.0
+        i: 0.1
+        i_clamp: 1
+      base_link_rear_left_wheel_joint:
+        p: 0.5
+        d: 0.0
+        i: 1.0
+        i_clamp: 100
+      base_link_rear_right_wheel_joint:
+        p: 0.5
+        d: 0.0
+        i: 1.0
+        i_clamp: 100
+      front_left_axel_front_left_wheel_joint:
+        p: 0.5
+        d: 0.0
+        i: 1.0
+        i_clamp: 100
+      front_right_axel_front_right_wheel_joint:
+        p: 0.5
+        d: 0.0
+        i: 1.0
+        i_clamp: 100

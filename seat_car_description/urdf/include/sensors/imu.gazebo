@@ -1,0 +1,28 @@
+<?xml version="2.0"?>
+<robot>
+
+  <!-- IMU -->
+  <gazebo reference="imu">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="seat_car_imu" filename="libhector_gazebo_ros_imu.so">
+      <updateRate>20.0</updateRate>
+      <robotNamespace>/</robotNamespace>
+      <bodyName>imu</bodyName>
+      <frameId>imu</frameId>
+      <topicName>imu</topicName>
+      <accelOffset>0 0 0</accelOffset>
+      <accelDrift>0.5 0.5 0.5</accelDrift>
+      <accelGaussianNoise>0.35 0.35 0.3</accelGaussianNoise>
+      <rateOffset>0 0 0</rateOffset>
+      <rateDrift>0.0 0.0 0.0</rateDrift>
+      <rateGaussianNoise>0.005 0.005 0.0015</rateGaussianNoise>
+      <headingOffset>0</headingOffset>
+      <headingDrift>0.1</headingDrift>
+      <headingGaussianNoise>0.05</headingGaussianNoise>
+    </plugin>
+  </gazebo>
+
+</robot>
