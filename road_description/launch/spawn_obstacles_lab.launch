@@ -1,0 +1,16 @@
+<!-- -->
+<launch>
+
+  <include file="$(find road_description)/launch/spawn_box.launch">
+    <arg name="name" value="obstacle1"/>
+    <arg name="x" value="-2.46"/>
+    <arg name="y" value="-10.39"/>
+    <arg name="yaw" value="0.0"/>
+    <arg name="length" value="0.4"/>
+    <arg name="width"  value="0.15"/>
+    <arg name="height" value="0.15"/>
+  </include>
+  
+
+
+</launch>  

@@ -1,7 +1,7 @@
 <!-- -->
 <launch>
 
-  <arg name="circuit"  default="full"/>
+  <arg name="circuit"  default="lab"/> <!--full-->
   <arg name="spawn_circuit" default="true"/>
   <arg name="name"  default="seat_car"/>
   <arg name="model" default="car"/>
