@@ -55,6 +55,6 @@ roslaunch seat_car_gazebo sim.launch
 rosservice call /semaphore_start1_color_plugin/trigger
 
 # Test car movement
-rostopic pub /steering std_msgs/UInt8 "data: 75"
+rostopic pub /steering std_msgs/Int16 "data: 75"
 rostopic pub /manual_control/speed    std_msgs/Int16 "data: 200"
 ```

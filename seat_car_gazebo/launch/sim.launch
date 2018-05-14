@@ -8,7 +8,7 @@
   <arg name="world" default="empty"/> <!-- empty, building -->
   <arg name="gazebo_gui" default="False"/>
   <arg name="car_x"    default="0.0"/>
-  <arg name="car_y"    default="-0.2"/> <!--CW: -0.2, CCW: 0.2 -->
+  <arg name="car_y"    default="0.0"/> <!--CW: -0.2, CCW: 0.2 -->
   <arg name="car_yaw"  default="0.0"/> <!--CW: 0.0, CCW: 3.1416 -->
   <arg name="fake_localization"  default="false"/>
   <arg name="rviz"       default="true"/>
